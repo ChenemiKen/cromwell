@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bootstrap5/css/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'cromwellapp/css/style.css' %}">
+    <title>Cromwell</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Cromwell</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <button class="btn btn-primary btn-sm white" id="switch-on">ON</button>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- main -->
+        <main>
+            <ul class="nav nav-tabs row" id="myTab" role="tablist">
+                <li class="nav-item col-6" role="presentation">
+                  <button class="nav-link active" id="pph-tab" data-bs-toggle="tab" data-bs-target="#pph" type="button" role="tab" aria-controls="pph" aria-selected="true">PPH</button>
+                </li>
+                <li class="nav-item col-6" role="presentation">
+                  <button class="nav-link" id="upwork-tab" data-bs-toggle="tab" data-bs-target="#upwork" type="button" role="tab" aria-controls="upwork" aria-selected="false">Upwork</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="pph" role="tabpanel" aria-labelledby="pph-tab">...</div>
+                <div class="tab-pane fade" id="upwork" role="tabpanel" aria-labelledby="upwork-tab">...</div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{% static 'cromwellapp/js/script.js' %}"></script>
+</body>
+</html>

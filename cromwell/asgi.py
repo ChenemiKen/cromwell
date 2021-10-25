@@ -9,8 +9,24 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/asgi/
 
 import os
 
+import django
+from channels.auth import AuthMiddlewareStack
+# from channels.http import AsgiHandler
+from channels.routing import ProtocolTypeRouter,URLRouter
+import cromwellapp.routers
+
 from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cromwell.settings')
 
-application = get_asgi_application()
+django.setup()
+
+# application = get_asgi_application()
+application = ProtocolTypeRouter({
+    'http': get_asgi_application(),
+    'websocket':AuthMiddlewareStack(
+        URLRouter(
+            cromwellapp.routers.websocket_urlpatterns
+        )
+    ),
+})

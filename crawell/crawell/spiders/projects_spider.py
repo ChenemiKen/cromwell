@@ -5,7 +5,7 @@ import re
 import json
 
 
-class QuotesSpider(scrapy.Spider):
+class ProjectsSpider(scrapy.Spider):
     name = "projects"
 
     def start_requests(self):
@@ -28,21 +28,25 @@ class QuotesSpider(scrapy.Spider):
             projects_data[key]={
                 'id': value['id'],
                 'title': value['attributes']['title'],
-                'category': {
-                    'cate_id':value['attributes']['category']['cate_id'], 
-                    'cate_name':value['attributes']['category']['cate_name'] 
-                },
-                'proj_desc': value['attributes']['proj_desc'],
-                'posted_date':value['attributes']['posted_dt'],
+                # 'category': {
+                #     'cate_id':value['attributes']['category']['cate_id'], 
+                #     'cate_name':value['attributes']['category']['cate_name'] 
+                # },
+                # 'proj_desc': value['attributes']['proj_desc'],
+                # 'posted_date':value['attributes']['posted_dt'],
             }
-        with open('initialState.log','w')as log_file:
+        print (projects_data)
+        # time = str(datetime.now().date())+str(datetime.now().time())
+        filename = f'islog'
+        with open(filename,'w')as log_file:
             for key, value in projects_data.items():
                 log_file.write('%s:%s\n' %(key,value))
+        self.log(f'Saved projects to {filename}')
 
 
-        time = datetime.now()
-        filename = f'projects.html'
-        script_strip=script_strip.encode("utf-8")
-        with open(filename, 'wb') as f:
-            f.write(script_strip)
-        self.log(f'Saved file {filename}')
+        # time = datetime.now()
+        # filename = f'projects.html'
+        # script_strip=script_strip.encode("utf-8")
+        # with open(filename, 'wb') as f:
+        #     f.write(script_strip)
+        # self.log(f'Saved file {filename}')
