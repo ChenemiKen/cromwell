@@ -6,6 +6,21 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+import sys
+from pathlib import Path
+
+# DJANGO INTEGRATION
+
+sys.path.append(os.path.dirname(os.path.abspath('.')))
+os.environ['DJANGO_SETTINGS_MODULE'] = "cromwell.settings"
+# os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
+# This is required only if Django Version > 1.8
+import django
+django.setup()
+
+# DJANGO INTEGRATION
 
 BOT_NAME = 'crawell'
 
@@ -62,9 +77,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'crawell.pipelines.CrawellPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'crawell.pipelines.CrawellPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
