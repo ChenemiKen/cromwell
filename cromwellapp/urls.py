@@ -15,6 +15,9 @@ from cromwellapp import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('switchon', views.switchOn, name='switchOn'),
-    path('switchoff', views.switchOff, name='switchOff')
+    path('pphswitchon', views.pphSwitchOn, name='pphSwitchOn'),
+    path('pphswitchoff', views.pphSwitchOff, name='pphSwitchOff'),
+    path('new', views.new, name='pphSwitchOff'),
+    path('startcrawler', views.startCrawler, name='startCrawler'),
+    path('stopcrawler', views.stopCrawler, name='stopCrawler'),
 ]

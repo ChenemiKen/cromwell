@@ -8,6 +8,9 @@
 from itemadapter import ItemAdapter
 
 
-class CrawellPipeline:
+class CrawellPipeline(object):
+    def __init__(self) -> None:
+        super().__init__()
+        
     def process_item(self, item, spider):
         return item

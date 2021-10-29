@@ -13,9 +13,8 @@ import django
 from channels.auth import AuthMiddlewareStack
 # from channels.http import AsgiHandler
 from channels.routing import ProtocolTypeRouter,URLRouter
-import cromwellapp.routers
-
 from django.core.asgi import get_asgi_application
+import cromwellapp.routers
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cromwell.settings')
 

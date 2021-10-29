@@ -3,8 +3,12 @@ from datetime import date, datetime
 import pprint
 import re
 import json
+import threading
+import time
 from cromwellapp.models import Project
-from asgiref.sync import sync_to_async
+from cromwellapp.consumers import ChatConsumer
+from asgiref.sync import sync_to_async, async_to_sync
+from channels.layers import get_channel_layer
 
 
 class ProjectsSpider(scrapy.Spider):
@@ -17,7 +21,7 @@ class ProjectsSpider(scrapy.Spider):
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
     
-    @sync_to_async
+    # @sync_to_async
     def save_to_db(self, proj_data):
         db_projects = Project.objects.order_by('-proj_id')
         if len(db_projects) > 0:
@@ -35,6 +39,30 @@ class ProjectsSpider(scrapy.Spider):
                 project.proj_description = value['proj_desc']
                 project.posted_date = value['posted_date']
                 project.save()
+        
+        channel_layer = get_channel_layer()
+        # async_to_sync(channel_layer.group_send)(
+        #     'cromwell_alert',
+        #     {'type': 'chat.message', 'message': 'message'}
+        # )
+        for key, value in proj_data.items():
+            if int(key)> last_proj_id:
+                async_to_sync(channel_layer.group_send)(
+                    'cromwell_alert',
+                    {
+                        'type':'new.project',
+                        'project':{
+                            'proj_id':value['id'],
+                            'title':value['title'],
+                            'cate_id':value['category']['cate_id'],
+                            'cate_name':value['category']['cate_name'],
+                            'proj_description':value['proj_desc'],
+                            'posted_date':value['posted_date'],
+                        }
+                    }
+                )
+            time.sleep(10)
+    
 
     async def parse(self, response):
         script= response.xpath("//script[contains(.,'window.PPHReact')]/text()").get()
@@ -56,7 +84,7 @@ class ProjectsSpider(scrapy.Spider):
                 'posted_date':value['attributes']['posted_dt'],
             }
         print (projects_data)
-        await self.save_to_db(projects_data)
+        threading.Thread(target=self.save_to_db, args=(projects_data,)).start()
         # time = str(datetime.now().date())+str(datetime.now().time())
         filename = f'islog'
         with open(filename,'w')as log_file:

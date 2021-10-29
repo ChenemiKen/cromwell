@@ -22,7 +22,6 @@ def crawl():
     reactor.run(installSignalHandlers=False)
     
 def crawlPPH():
-    int = 2
     def crawl(int=int):
         d = ''
         if int>0:
@@ -43,7 +42,6 @@ def crawlPPH():
     
     threading.Timer(20.0, crawlPPH).start()
     crawl()
-    int -= 1
 
     
     # q = Queue()

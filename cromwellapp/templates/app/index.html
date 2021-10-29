@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'bootstrap5/css/bootstrap.min.css' %}">
     <script src="{% static 'bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'cromwellapp/css/style.css' %}">
@@ -22,7 +25,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <button class="btn btn-primary btn-sm white" id="switch-on">ON</button>
+                        <button class="btn btn-info btn-sm white" id="yesNotification"><i class="fas fa-bell"></i></button>
+                        <button class="btn btn-info btn-sm white" id="noNotification"><i class="fas fa-bell-slash"></i></button>
                     </li>
                 </ul>
                 </div>
@@ -40,8 +44,14 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="pph" role="tabpanel" aria-labelledby="pph-tab">...</div>
-                <div class="tab-pane fade" id="upwork" role="tabpanel" aria-labelledby="upwork-tab">...</div>
+                <div class="tab-pane fade show active" id="pph" role="tabpanel" aria-labelledby="pph-tab">
+                    <button class="btn btn-primary btn-sm white d-block ms-auto mt-3" id="pph-switch-on"> ON </button>
+                    <p>...</p>
+                </div>
+                <div class="tab-pane fade" id="upwork" role="tabpanel" aria-labelledby="upwork-tab">
+                    <button class="btn btn-primary btn-sm white d-block ms-auto mt-3" id="upw-switch-on"> ON </button>
+                    <p>...</p>
+                </div>
             </div>
         </main>
     </div>
