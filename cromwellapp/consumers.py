@@ -15,7 +15,15 @@ class ChatConsumer(WebsocketConsumer):
         self.accept()
 
         self.send(text_data=json.dumps({
-            'message': self.channel_name
+            'type':'new.project',
+            'project':{
+                'proj_id':'value[id]',
+                'title':'value[title]',
+                'cate_id':'value[category][cate_id]',
+                'cate_name':'value[category][cate_name]',
+                'proj_description':'value[proj_desc]',
+                'posted_date':'value[posted_date]',
+            }
         }))
 
 

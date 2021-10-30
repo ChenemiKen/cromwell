@@ -21,25 +21,7 @@ class ProjectsSpider(scrapy.Spider):
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
     
-    # @sync_to_async
-    def save_to_db(self, proj_data):
-        db_projects = Project.objects.order_by('-proj_id')
-        if len(db_projects) > 0:
-            last_proj_id = db_projects[0].proj_id
-        else:
-            last_proj_id = 0
-
-        for key, value in proj_data.items():
-            if int(key) > last_proj_id:
-                project = Project()
-                project.proj_id = value['id']
-                project.title = value['title']
-                project.cate_id = value['category']['cate_id']
-                project.cate_name = value['category']['cate_name']
-                project.proj_description = value['proj_desc']
-                project.posted_date = value['posted_date']
-                project.save()
-        
+    def send_notification(self, last_proj_id, proj_data):
         channel_layer = get_channel_layer()
         # async_to_sync(channel_layer.group_send)(
         #     'cromwell_alert',
@@ -61,8 +43,31 @@ class ProjectsSpider(scrapy.Spider):
                         }
                     }
                 )
-            time.sleep(10)
-    
+                time.sleep(15)
+            
+
+
+    # @sync_to_async
+    def save_to_db(self, proj_data):
+        db_projects = Project.objects.order_by('-proj_id')
+        if len(db_projects) > 0:
+            last_proj_id = db_projects[0].proj_id
+        else:
+            last_proj_id = 0
+        # send out notification 
+        threading.Thread(target=self.send_notification, args=(last_proj_id, proj_data)).start()
+
+        for key, value in proj_data.items():
+            if int(key) > last_proj_id:
+                project = Project()
+                project.proj_id = value['id']
+                project.title = value['title']
+                project.cate_id = value['category']['cate_id']
+                project.cate_name = value['category']['cate_name']
+                project.proj_description = value['proj_desc']
+                project.posted_date = value['posted_date']
+                project.save()
+         
 
     async def parse(self, response):
         script= response.xpath("//script[contains(.,'window.PPHReact')]/text()").get()
@@ -86,8 +91,8 @@ class ProjectsSpider(scrapy.Spider):
         print (projects_data)
         threading.Thread(target=self.save_to_db, args=(projects_data,)).start()
         # time = str(datetime.now().date())+str(datetime.now().time())
-        filename = f'islog'
-        with open(filename,'w')as log_file:
-            for key, value in projects_data.items():
-                log_file.write('%s:%s\n' %(key,value))
-        self.log(f'Saved projects to {filename}')
+        # filename = f'islog'
+        # with open(filename,'w')as log_file:
+        #     for key, value in projects_data.items():
+        #         log_file.write('%s:%s\n' %(key,value))
+        # self.log(f'Saved projects to {filename}')

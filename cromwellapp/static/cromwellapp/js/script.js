@@ -22,8 +22,9 @@ document.getElementById('pph-switch-on').onclick= ()=>{
         console.log('Wesocket connected');
     }
     socket.onmessage=(event)=>{
-        console.log(event.data);
-        sendNotification();
+        console.log(event);
+        data = JSON.parse(event.data)
+        sendNotification(data.project);
         // if (!('Notification' in window)) {
         //     // set the button to shown or hidden, depending on what the user answers
         //     if(Notification.permission === 'default') {
@@ -42,11 +43,9 @@ document.getElementById('pph-switch-on').onclick= ()=>{
     }
 };
 
-function sendNotification(){
-    // if(Notification.permission === 'granted'){
-        var text = 'HEY! Your task is now overdue.';
-        var notification = new Notification('To do list', { body: text});
-    // }
+function sendNotification(project){
+        var img = '/static/cromwellapp/images/icon3.png'
+        var notification = new Notification(project['title'], {body: project.proj_description, icon:img});
 }
 
 
