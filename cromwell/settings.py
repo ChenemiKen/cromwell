@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 from django.http import request
@@ -71,21 +71,33 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cromwell.wsgi.application'
+# WSGI_APPLICATION = 'cromwell.wsgi.application'
 ASGI_APPLICATION = 'cromwell.asgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# local
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'cromwell',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306'
+#     }
+# }
+
+# prod
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cromwell',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'NAME': 'heroku_36d863a9bd06981',
+        'USER': 'bb841fdd0364d2',
+        'PASSWORD': '1fae5aca',
+        'HOST': 'us-cdbr-east-04.cleardb.com',
     }
 }
 
@@ -131,19 +143,14 @@ STATICFILES_DIRS = [
     BASE_DIR/"static",
     BASE_DIR/"cromwellapp/static"
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [os.environ.get('REDIS_URL'),("127.0.0.1", 6379)],
         },
     },
 }
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer"
-#     }
-# }
-# request.session['switch'] = False
