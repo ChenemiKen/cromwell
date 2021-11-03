@@ -27,7 +27,7 @@ SECRET_KEY = 'c(0gjj0sr&i79&#iq$lzslinvz@@lt0=zf19^p*ega-s%kvp#5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cromwel.herokuapp.com','127.0.0.1:8000']
+ALLOWED_HOSTS = ['cromwel.herokuapp.com','127.0.0.1']
 
 
 # Application definition
@@ -81,7 +81,7 @@ ASGI_APPLICATION = 'cromwell.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# local
+# # local
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -152,8 +152,10 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL'),("127.0.0.1", 6379)],
+            "hosts": (os.environ.get('REDIS_URL')),
         },
     },
 }
+
+# ("127.0.0.1", 6379)
 
