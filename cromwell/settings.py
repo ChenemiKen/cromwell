@@ -27,7 +27,7 @@ SECRET_KEY = 'c(0gjj0sr&i79&#iq$lzslinvz@@lt0=zf19^p*ega-s%kvp#5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cromwel.herokuapp.com','127.0.0.1:8000']
 
 
 # Application definition
