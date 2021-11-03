@@ -11,7 +11,7 @@ document.getElementById('pph-switch-on').onclick= ()=>{
     });
         
     const socket = new WebSocket(
-        'ws://'
+        'wss://'
         + window.location.host
         + '/ws/cromwell/'
         + 'app'
